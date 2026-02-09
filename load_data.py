@@ -7,20 +7,10 @@ def load_data():
         dataframe: contains incident year and species name
     '''
     df = pd.read_csv('Public.csv',
-                     dtype={'AIRPORT_LATITUDE': str,
-                            'AIRPORT_LONGITUDE': str,
-                            'FLT': str,
-                            'AMO': str,
-                            'BIRD_BAND_NUMBER': str},
+                     usecols=['AIRPORT', 'TIME_OF_DAY', 'SKY', 'PHASE_OF_FLIGHT', 'SPECIES', 'INCIDENT_YEAR', 'INCIDENT_MONTH'],
                      na_values=['UNKNOWN'])
     
-    select_columns = ['INCIDENT_YEAR', 'INCIDENT_MONTH', 'AIRPORT', 'SPECIES',
-                      'SKY', 'TIME_OF_DAY', 'PHASE_OF_FLIGHT']
-    
-    # create dataframe with selected columns
-    df = pd.DataFrame(data=df, columns=select_columns)
     # drop rows with N/A values
-    df = df.dropna(thresh=7)
+    df = df.dropna()
     df = df.reset_index(drop=True)
-
     return df
